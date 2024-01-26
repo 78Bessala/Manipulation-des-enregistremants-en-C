@@ -1,0 +1,147 @@
+#include<stdio.h>
+#include<string.h>
+
+struct Etudiant
+{
+    char Matricule[6];
+    char Nom[20];
+    char Prenom[30];
+    int Age;
+    char Filiere[7];
+    char Niveau[5];
+    int Cotisation;
+};
+
+int main() {
+    int numEtud;
+    printf("Veuillez entrer le nombre d'etudiants : ");
+    scanf("%d", &numEtud);
+    struct Etudiant etudiants[numEtud];
+
+    for (int i = 0; i < numEtud; i++) {
+        printf("Matricule : ");
+        scanf("%s", etudiants[i].Matricule);
+        printf("Nom : ");
+        scanf("%s", etudiants[i].Nom);
+        printf("Prenom : ");
+        scanf("%s", etudiants[i].Prenom);
+        printf("Age : ");
+        scanf("%d", &etudiants[i].Age);
+        printf("Filiere : ");
+        scanf("%s", etudiants[i].Filiere);
+        printf("Niveau : ");
+        scanf("%s", etudiants[i].Niveau);
+        printf("Cotisation : ");
+        scanf("%d", &etudiants[i].Cotisation);
+    }
+
+    printf("\nListe des etudiants :\n");
+    for (int i = 0; i < numEtud; i++) {
+        printf("Etudiant %d - Matricule: %s, Nom: %s, Prenom: %s, Age: %d\n", i+1, etudiants[i].Matricule, etudiants[i].Nom, etudiants[i].Prenom, etudiants[i].Age);
+        printf("Etudiant %d - Filiere: %s, Niveau: %s, Cotisation: %d\n\n", i+1, etudiants[i].Filiere, etudiants[i].Niveau, etudiants[i].Cotisation);
+    }        
+
+// Correction des informations de l étudiant
+int choix, j;
+printf("\nVoulez-vous corriger les informations de l'etudiant ? (1 pour Oui, 0 pour Non) : ");
+scanf("%d", &choix);
+
+if (choix == 1) {
+    printf("\nNouvelles informations de l'etudiant :\n");
+    printf("Indice de l'etudiant a corriger (entre 1 et %d) : ", numEtud);
+    scanf("%d", &j);
+    j--; // Subtract 1 from j to match the array index
+
+    printf("Matricule : ");
+    scanf("%s", etudiants[j].Matricule);
+    printf("Nom : ");
+    scanf("%s", etudiants[j].Nom);
+    printf("Prenom : ");
+    scanf("%s", etudiants[j].Prenom);
+    printf("Age : ");
+    scanf("%d", &etudiants[j].Age);
+    printf("Filiere : ");
+    scanf("%s", etudiants[j].Filiere);
+    printf("Niveau : ");
+    scanf("%s", etudiants[j].Niveau);
+    printf("Cotisation : ");
+    scanf("%d", &etudiants[j].Cotisation);
+
+    printf("\nInformations de l'etudiant corrigees avec succes :\n");
+    printf("Matricule : %s, Nom : %s, Prenom : %s, Age : %d\n", etudiants[j].Matricule, etudiants[j].Nom, etudiants[j].Prenom, etudiants[j].Age);
+    printf("Filiere : %s, Niveau : %s, Cotisation : %d\n", etudiants[j].Filiere, etudiants[j].Niveau, etudiants[j].Cotisation);
+}   
+    // Suppression d'un étudiant
+int supprimer;
+printf("\nVoulez-vous supprimer un étudiant ? (1 pour Oui, 0 pour Non) : ");
+scanf("%d", &supprimer);
+
+if (supprimer == 1) {
+    char matriculeASupprimer[6];
+    printf("\nEntrez le matricule de l'étudiant à supprimer : ");
+    scanf("%s", matriculeASupprimer);
+
+    int etudiantTrouve = 0; // Indicateur pour vérifier si l'étudiant a été trouvé
+
+    // Parcourir le tableau et trouver l'étudiant avec le matricule donné
+    for (int i = 0; i < numEtud; i++) {
+        if (strcmp(etudiants[i].Matricule, matriculeASupprimer) == 0) {
+            // Décaler les éléments restants pour écraser l'étudiant supprimé
+            for (int j = i; j < numEtud - 1; j++) {
+                etudiants[j] = etudiants[j + 1];
+            }
+
+            etudiantTrouve = 1; // Définir l'indicateur pour indiquer que l'étudiant a été trouvé
+            break;
+        }
+    }
+
+    if (etudiantTrouve) {
+        numEtud--; // Décrémenter le nombre d'étudiants
+        printf("Étudiant supprimé avec succès.\n");
+    } else {
+        printf("Aucun étudiant avec le matricule fourni n'a été trouvé.\n");
+    }
+}
+// sommes des cotisations
+int sum=0;
+for(int i=0;i<numEtud;i++){
+   sum=sum+etudiants[i].Cotisation ;
+}
+printf("la somme des cotisation est : %d",sum);
+// partie recherche
+int trouve;
+printf("\nVoulez-vous chercher un étudiant ? (1 pour Oui, 0 pour Non) : ");
+scanf("%d", &trouve);
+
+if (trouve == 1) {
+    char MatRechercher[6];
+    printf("Entrez le matricule de l'étudiant que vous cherchez : ");
+    scanf("%s", MatRechercher);
+
+    int etudiantTrouve = 0;
+
+    for (int i = 0; i < numEtud; i++) {
+        if (strcmp(etudiants[i].Matricule, MatRechercher) == 0) {
+            etudiantTrouve = 1;
+
+            printf("\nInformations de l'étudiant trouvé :\n");
+            printf("Matricule : %s\n", etudiants[i].Matricule);
+            printf("Nom : %s\n", etudiants[i].Nom);
+            printf("Prenom : %s\n", etudiants[i].Prenom);
+            printf("Age : %d\n", etudiants[i].Age);
+            printf("Filiere : %s\n", etudiants[i].Filiere);
+            printf("Niveau : %s\n", etudiants[i].Niveau);
+            printf("Cotisation : %d\n", etudiants[i].Cotisation);
+        }
+    }
+
+    if (!etudiantTrouve) {
+        printf("\nAucun étudiant avec le matricule recherché n'a été trouvé.\n");
+    }
+}
+
+
+
+    return 0;
+}
